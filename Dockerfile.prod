@@ -1,0 +1,12 @@
+FROM node:lts-alpine
+WORKDIR /srv
+ENV NODE_ENV production
+
+COPY index.js package.json entrypoint.sh jsconfig.json ./
+COPY cloud ./cloud
+COPY app ./app
+
+RUN npm i --omit=dev
+RUN chmod +x ./entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]

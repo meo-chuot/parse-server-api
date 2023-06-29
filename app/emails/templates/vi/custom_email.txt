@@ -1,0 +1,6 @@
+Xin chào!
+
+Đây là thông báo liên quan đến tài khoản của bạn:
+{{username}}
+
+{{appName}}

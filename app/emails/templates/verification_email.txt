@@ -1,0 +1,7 @@
+Xin chào!
+
+Nhấp vào liên kết bên dưới để xác minh địa chỉ email của bạn:
+
+{{{link}}}
+
+{{appName}}

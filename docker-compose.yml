@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: "mongo:latest"
+    ports:
+      - 27017:27017
+
+  parse:
+    build:
+      context: .
+    environment:
+      - PARSE_SERVER_APPLICATION_ID=parse
+      - PARSE_SERVER_MASTER_KEY=parse@master123!
+      - PARSE_SERVER_DATABASE_URI=mongodb://mongo:27017/parse
+      - PARSE_SERVER_MOUNT_PATH=/parse
+      - PORT=1337
+    ports:
+      - "1337:1337"
+    volumes:
+      - .:/srv
+    depends_on:
+      - mongo
+
+  dashboard:
+    image: "parseplatform/parse-dashboard"
+    ports:
+      - "4040:4040"
+    environment:
+      - PARSE_DASHBOARD_ALLOW_INSECURE_HTTP=true
+      - PARSE_DASHBOARD_SERVER_URL=/api
+      - PARSE_DASHBOARD_MASTER_KEY=parse@master123!
+      - PARSE_DASHBOARD_APP_ID=parse
+      - PARSE_DASHBOARD_APP_NAME=MyParseApp
+      - PARSE_DASHBOARD_USER_ID=admin
+      - PARSE_DASHBOARD_USER_PASSWORD=pwd@admin123!
+      - MOUNT_PATH=/dashboard/
+      - PORT=4040
+    depends_on:
+      - parse

@@ -1,6 +1,6 @@
-import config from "../config";
+import config from "@/config";
 import ParseServer, { ParseGraphQLServer } from "parse-server";
-import logger from "./logger";
+import logger from "@/parse/logger";
 import { schemas } from "@/schema";
 import { EmailAdapter } from '@/parse/email-adapter'
 import { FileAdapter } from '@/parse/file-adapter'

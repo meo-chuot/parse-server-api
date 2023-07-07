@@ -1,24 +1,22 @@
-import 'module-alias/register'
-import express from "express";
-import config from "@/config";
-import { graphqlServer, parseServer } from "@/parse/parse-server";
-import { displayEnvironment, filesCacheControl, handleErrors, requireHTTPS } from "@/parse/express-utils";
-import { Func, Jobs, Webhooks } from "@/cloud/main";
+import express from 'express';
+import config from '@/config';
+import { graphqlServer, parseServer } from '@/parse/parse-server';
+import { displayEnvironment, handleErrors } from '@/parse/express-utils';
+import { Func, Jobs, Webhooks, EventHook } from '@/cloud/main';
 
-const start = () => {
+const start = async () => {
     const app = express();
-
-    app.use(requireHTTPS);
-    app.use(filesCacheControl);
+    await parseServer.start();
     app.use(config.app.parseMount, parseServer.app);
 
     graphqlServer.applyGraphQL(app);
 
-    Func.init();
-    Jobs.init();
-    Webhooks.init(app);
+    await Func.init();
+    await Jobs.init();
+    await EventHook.init();
+    await Webhooks.init(app);
 
-    app.listen(config.app.port, displayEnvironment).on("error", handleErrors);
+    app.listen(config.app.port, displayEnvironment).on('error', handleErrors);
 };
 
 start();

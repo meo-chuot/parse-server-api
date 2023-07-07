@@ -1,6 +1,6 @@
-export class Jobs {
+export class EventHook {
     static async init(): Promise<void> {
-        Parse.Cloud.job("SendEmail", async () => {
+        Parse.Cloud.beforeSave("Test", () => {
             return;
         });
     }

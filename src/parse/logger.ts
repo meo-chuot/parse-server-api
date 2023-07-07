@@ -5,7 +5,7 @@ const myFormat = format.printf(({ level, message, timestamp }) => {
 });
 
 const logger = createLogger({
-    level: "debug",
+    level: "error",
     format: format.combine(
         format.colorize(),
         format.timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),

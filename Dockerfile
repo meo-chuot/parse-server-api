@@ -3,6 +3,6 @@ WORKDIR /srv
 ENV NODE_ENV development
 
 COPY . .
-RUN yarn install
+RUN npm install
 
-CMD ["yarn", "dev"]
+CMD ["npm", "run", "dev"]

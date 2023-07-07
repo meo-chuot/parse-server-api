@@ -29,7 +29,7 @@ const config = {
             masterKey: process.env.MASTER_KEY || "",
         },
         liveQuery: {
-            classNames: ['Posts', 'Comments'],
+            classNames: [].concat(( process.env.LIVE_QUERY_CLASSES || "").split(',').filter( (klass) => klass && klass.length )),
         },
     },
     smtp: {

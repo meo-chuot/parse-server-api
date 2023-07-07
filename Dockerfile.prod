@@ -1,12 +1,19 @@
-FROM node:lts-alpine
+FROM node:lts-alpine as base
 WORKDIR /srv
 ENV NODE_ENV production
 
-COPY index.js package.json entrypoint.sh jsconfig.json ./
-COPY cloud ./cloud
-COPY app ./app
+FROM base as builder
+RUN apk add curl
+RUN curl -sf https://gobinaries.com/tj/node-prune | sh
+COPY . .
+RUN yarn install --prod
+RUN yarn build
+RUN node-prune
 
-RUN npm i --omit=dev
+FROM base as runner
+COPY --from=builder /app/entrypoint.sh .
+COPY --from=builder /app/dist/src .
+COPY --from=builder /app/node_modules .
 RUN chmod +x ./entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]

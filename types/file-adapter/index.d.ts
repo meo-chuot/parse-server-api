@@ -1,0 +1,1 @@
+declare module "@culy/parse-server-gcs-adapter"

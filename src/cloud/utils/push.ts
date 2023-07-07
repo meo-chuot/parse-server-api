@@ -1,3 +1,4 @@
+
 export const sendPushNotification = async (user: Parse.User, payload: any, appIdentifier: string): Promise<void> => {
     const sessions = await new Parse.Query(Parse.Session).equalTo("user", user).find({ useMasterKey: true });
 

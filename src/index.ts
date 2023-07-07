@@ -1,9 +1,8 @@
-import 'module-alias/register'
 import express from "express";
 import config from "@/config";
 import { graphqlServer, parseServer } from "@/parse/parse-server";
 import { displayEnvironment, filesCacheControl, handleErrors, requireHTTPS } from "@/parse/express-utils";
-import { Func, Jobs, Webhooks } from "@/cloud/main";
+import { Func, Jobs, Webhooks, EventHook } from "@/cloud/main";
 
 const start = () => {
     const app = express();
@@ -16,6 +15,7 @@ const start = () => {
 
     Func.init();
     Jobs.init();
+    EventHook.init();
     Webhooks.init(app);
 
     app.listen(config.app.port, displayEnvironment).on("error", handleErrors);

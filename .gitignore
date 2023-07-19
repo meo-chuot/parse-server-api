@@ -138,3 +138,6 @@ dist
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/node,yarn,vscode
+
+yarn.lock
+package-lock.json
